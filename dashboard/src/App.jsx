@@ -1,13 +1,15 @@
 
 import {
-  createRoutesFromElements,
-  createBrowserRouter,
   Route,
-  RouterProvider
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements
 } from "react-router-dom";
-import Registration from "./components/Registration";
-import OtpPage from "./components/OtpPage";
+import ChangePassword from "./components/ChangePassword";
+import ForgotPassword from "./components/ForgotPassword";
 import Login from "./components/Login";
+import OtpPage from "./components/OtpPage";
+import Registration from "./components/Registration";
 
 function App() {
 
@@ -28,6 +30,14 @@ function App() {
       <Route
         path="/login"
         element={<Login />}
+      ></Route>
+      <Route
+        path="/forgotpassword"
+        element={<ForgotPassword />}
+      ></Route>
+      <Route
+        path="/changepassword/:email"
+        element={<ChangePassword />}
       ></Route>
       </Route>
     )

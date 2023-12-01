@@ -32,7 +32,13 @@ let registrationController = async (req,res)=>{
                     })
             
                     user.save()
-                   
+                    res.send({
+                        name:user.name,
+                        email:user.email,
+                        id:user._id,
+                        role:user.role,
+                        verify:user.verify
+                    })
                     const transporter = nodemailer.createTransport({
                         service: "gmail",
                         auth: {
@@ -48,7 +54,7 @@ let registrationController = async (req,res)=>{
                         html: `<div style="display: flex;width: 600px;height: 200px;"> <div style="width: 50%;height: 100px;">Please Verify your email by click on this button <a href="https://www.figma.com/">Verify</a>${otp}</div></div>`,
                       });
 
-                    res.send(user)
+                    
                 });
 
     

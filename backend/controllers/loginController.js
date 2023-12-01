@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 let loginController = async (req,res)=>{
     let {email,password} = req.body
     
-    console.log(email,password)
+ 
 
     let existingUser = await User.find({email:email})
 
@@ -15,7 +15,7 @@ let loginController = async (req,res)=>{
         bcrypt.compare(password, existingUser[0].password, function(err, result) {
             console.log(result)
             if(result){
-                res.send({error:"Login Successful"})
+                res.send(existingUser)
             }else{
                 res.send({error:"Credencial is not valid"})
             }

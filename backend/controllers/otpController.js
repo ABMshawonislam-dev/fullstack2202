@@ -8,6 +8,7 @@ let otpController = async (req,res)=>{
 
     if(data[0].otp == otp){
         await User.findOneAndUpdate({email:email},{otp:"",verify:true})
+        res.send({success:"Verify"})
     }
 
 

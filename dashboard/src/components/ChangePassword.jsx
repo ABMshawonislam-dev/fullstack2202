@@ -1,16 +1,22 @@
 import { Button, Card, Form, Input, Space } from 'antd';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'
+
 const ChangePassword = () => {
     let {email} = useParams()
     let navigate = useNavigate()
     const onFinish = async (values) => {
+      console.log("token",email)
+      console.log(values)
 
+      
         let data = {
-          password:password
+          token:email,
+          password:values.password
         }
     
-        // let otpData = await axios.post("http://localhost:8000/api/v1/auth/forgotpassword",data)
+        let otpData = await axios.post("http://localhost:8000/api/v1/auth/changepassword",data)
     
         // console.log(otpData)
         // navigate("/login")
@@ -22,7 +28,7 @@ const ChangePassword = () => {
   return (
     <Space direction="vertical" size={16}>
     <Card
-      title="Change Password"
+      title="Changess Password"
       style={{
         width: 300,
       }}

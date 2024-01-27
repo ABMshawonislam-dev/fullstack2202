@@ -8,17 +8,19 @@ const Login = () => {
 
     const onFinish = async (values) => {
         let data = {
-          email:values.email,
-          password:values.password
+          email:"shawon.cit.bd@gmail.com",
+          password:"123456789"
         }
     
         let logData = await axios.post("http://localhost:8000/api/v1/auth/login",data)
         console.log(logData)
 
-        if(logData.data[0].role == "User"){
+        if(logData.data.role == "User"){
             console.log("You do not have permission for login")
         }else{
             console.log("Done")
+            navigate("/home")
+            localStorage.setItem("user", JSON.stringify(logData.data));
 
         }
     
@@ -59,12 +61,7 @@ const Login = () => {
     <Form.Item
       label="Email"
       name="email"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your email!',
-        },
-      ]}
+     
     >
       <Input />
     </Form.Item>
@@ -72,12 +69,8 @@ const Login = () => {
     <Form.Item
       label="Password"
       name="password"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your password!',
-        },
-      ]}
+    
+      
     >
       <Input.Password />
     </Form.Item>

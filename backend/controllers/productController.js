@@ -1,8 +1,20 @@
-let productController = (req, res) => {
-    let { name, description } = req.body;
+const Products = require("../model/productSchema");
 
-    console.log(name, description);
-    console.log("Hello World");
+let productController = (req, res) => {
+    let { name, description, rating, status, regularprice, price, brand } =
+        req.body;
+
+    let product = new Products({
+        name: name,
+        description: description,
+        price: price,
+        regularprice: regularprice,
+        rating: rating,
+        status: status,
+        brand: brand,
+    });
+    product.save();
+    console.log(product);
 };
 
 module.exports = productController;

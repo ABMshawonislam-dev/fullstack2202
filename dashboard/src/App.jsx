@@ -12,6 +12,7 @@ import Registration from "./components/Registration";
 import Home from "./components/Home";
 import UserList from "./components/UserList";
 import ViewCategory from "./components/ViewCategory";
+import AddCategory from "./components/AddCategory";
 
 function App() {
    const router = createBrowserRouter(
@@ -29,6 +30,7 @@ function App() {
             <Route path="/home" element={<Home />}>
                <Route path="userlist" element={<UserList />}></Route>
                <Route path="viewcategory" element={<ViewCategory />}></Route>
+               <Route path="addcategory" element={<AddCategory />}></Route>
             </Route>
          </Route>
       )

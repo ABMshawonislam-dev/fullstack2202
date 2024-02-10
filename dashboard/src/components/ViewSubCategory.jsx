@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Form,Input,Button, Space, Table, Modal } from 'antd';
 import { useSelector } from "react-redux";
 
-const ViewCategory = () => {
-   let [data,setData] = useState([])
+const ViewSubCategory = () => {
+    let [data,setData] = useState([])
    let [loadData,setLoadData] = useState(false)
    let [loading,setLoading] = useState("")
    let [msg ,setMsg] = useState("")
@@ -25,7 +25,7 @@ const ViewCategory = () => {
 
    let handleDelete = async (id)=>{
     setLoading(id)
-      let data = await axios.post("http://localhost:8000/api/v1/product/deletecategory",{
+      let data = await axios.post("http://localhost:8000/api/v1/product/deletesubcategory",{
          id:id
       })
 
@@ -37,7 +37,7 @@ const ViewCategory = () => {
 
    const onFinishModal =async (values) => {
       console.log('Success Modal:', values,editid);
-      let response = await axios.post("http://localhost:8000/api/v1/product/editcategory",{
+      let response = await axios.post("http://localhost:8000/api/v1/product/editsubcategory",{
           name: values.categoryname,
           id:editid
 
@@ -52,27 +52,17 @@ const ViewCategory = () => {
 
     };
 
-    let handleapprove = async (item)=>{
-      setLoading(item.key)
-      let response = await axios.post("http://localhost:8000/api/v1/product/approvecategory",{
-          isActive: item.active == "Approved" ?false:true,
-          id:item.key
-
-      })
-
-      console.log(response)
-      setLoadData(!loadData)
-      setLoading("")
-      
-    
-    }
-
    const columns = [
       {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
       
+      },
+      {
+        title: 'Category',
+        dataIndex: 'category',
+        key: 'category',
       },
       {
         title: 'Active',
@@ -90,8 +80,7 @@ const ViewCategory = () => {
             }
             <Button onClick={()=>handleDelete(record.key)} loading={loading == record.key?true:false}>Delete</Button>
             {userdata.role == "Admin"&&
-            <Button  onClick={()=>handleapprove(record)} loading={loading == record.key?true:false}> {record.active == "Approved" ?"Hold":"Approve"} </Button>
-        }
+            <Button  >Approve</Button>}
           </Space>
         ),
       },
@@ -111,16 +100,17 @@ const ViewCategory = () => {
       let arr = []
       async function viewcategory() {
          let data = await axios.get(
-            "http://localhost:8000/api/v1/product/allcategory"
+            "http://localhost:8000/api/v1/product/allsubcategory"
          );
 
+console.log(data.data)
          data.data.map(item=>{
             arr.push(
                {
                  key: item._id,
                  name: item.name,
+                 category:item.categoryId.name,
                  active: item.isActive ? "Approved":"Pending",
-                 
                },
             )
          })
@@ -129,8 +119,8 @@ const ViewCategory = () => {
       }
       viewcategory();
    }, [loadData]);
-   return  (
-      <>
+  return (
+    <>
          <h1>Categories {data.length}</h1>
          <p>{msg}</p>
          <Table columns={columns} dataSource={data}/>
@@ -183,7 +173,7 @@ const ViewCategory = () => {
             </Form>
          </Modal>
       </>
-   );
-};
+  )
+}
 
-export default ViewCategory;
+export default ViewSubCategory

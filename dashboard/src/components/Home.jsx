@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Menu, Col, Row } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function getItem(label, key, icon, children, type) {
    return {
@@ -19,7 +20,9 @@ function getItem(label, key, icon, children, type) {
 
 const Home = () => {
    let navigate = useNavigate();
+   const data = useSelector(state=>state.activeUser.value)
    const items = [
+      data.role == "Admin" &&
       getItem("Users", "sub1", <MailOutlined />, [
          getItem("Merchant", "/home/userlist"),
          getItem("Users", "2"),
@@ -30,8 +33,8 @@ const Home = () => {
             getItem("View Category", "/home/viewcategory"),
          ]),
          getItem("Sub Category", "sub4", null, [
-            getItem("Add Sub Category", "5"),
-            getItem("View Sub Category", "6"),
+            getItem("Add Sub Category", "/home/addsubcategory"),
+            getItem("View Sub Category", "/home/viewsubcategory"),
          ]),
          getItem("Product", "sub5", null, [
             getItem("Add Product", "7"),

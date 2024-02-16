@@ -1,8 +1,8 @@
 import {
-   Route,
-   RouterProvider,
-   createBrowserRouter,
-   createRoutesFromElements,
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
 } from "react-router-dom";
 import ChangePassword from "./components/ChangePassword";
 import ForgotPassword from "./components/ForgotPassword";
@@ -15,36 +15,38 @@ import ViewCategory from "./components/ViewCategory";
 import AddCategory from "./components/AddCategory";
 import AddSubCategory from "./components/AddSubCategory";
 import ViewSubCategory from "./components/ViewSubCategory";
+import AddProduct from "./components/AddProduct";
 
 function App() {
-   const router = createBrowserRouter(
-      createRoutesFromElements(
-         <Route>
-            <Route path="/" element={<Registration />}></Route>
-            <Route path="/otp/:email" element={<OtpPage />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
-            <Route
-               path="/changepassword/:email"
-               element={<ChangePassword />}
-            ></Route>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<Registration />}></Route>
+        <Route path="/otp/:email" element={<OtpPage />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+        <Route
+          path="/changepassword/:email"
+          element={<ChangePassword />}
+        ></Route>
 
-            <Route path="/home" element={<Home />}>
-               <Route path="userlist" element={<UserList />}></Route>
-               <Route path="viewcategory" element={<ViewCategory />}></Route>
-               <Route path="addcategory" element={<AddCategory />}></Route>
-               <Route path="addsubcategory" element={<AddSubCategory />}></Route>
-               <Route path="viewsubcategory" element={<ViewSubCategory />}></Route>
-            </Route>
-         </Route>
-      )
-   );
+        <Route path="/home" element={<Home />}>
+          <Route path="userlist" element={<UserList />}></Route>
+          <Route path="viewcategory" element={<ViewCategory />}></Route>
+          <Route path="addcategory" element={<AddCategory />}></Route>
+          <Route path="addsubcategory" element={<AddSubCategory />}></Route>
+          <Route path="viewsubcategory" element={<ViewSubCategory />}></Route>
+          <Route path="addproduct" element={<AddProduct />}></Route>
+        </Route>
+      </Route>
+    )
+  );
 
-   return (
-      <>
-         <RouterProvider router={router} />
-      </>
-   );
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Card } from "antd";
+import { Button, Checkbox, Form, Input, Card, Col, Row } from "antd";
+import axios from "axios";
 
 const AddProduct = () => {
   let [varinatvalue, setVarinatvalue] = useState([]);
   let [value, setValue] = useState("");
   let [valuestock, setValueStock] = useState("");
+  const onFinishMain = async (values) => {
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/product/products",
+      {
+        name: values.name,
+        description: values.description,
+        variant: varinatvalue,
+      }
+    );
+    console.log(data);
+  };
+
   const onFinish = (values) => {
     let arr = [...varinatvalue];
 
@@ -28,6 +41,21 @@ const AddProduct = () => {
     setVarinatvalue(arr);
   };
 
+  let handleDelete = (index) => {
+    console.log(index);
+    let arr = [...varinatvalue];
+    arr.splice(index, 1);
+    setVarinatvalue(arr);
+  };
+
+  let handleValueDelete = (mainid, id) => {
+    console.log(mainid, id);
+    let arr = [...varinatvalue];
+    console.log(arr[mainid].value);
+    arr[mainid].value.splice(id, 1);
+    setValue(arr);
+  };
+
   return (
     <>
       <Form
@@ -39,12 +67,12 @@ const AddProduct = () => {
           span: 16,
         }}
         style={{
-          maxWidth: 600,
+          maxWidth: 1000,
         }}
         initialValues={{
           remember: true,
         }}
-        onFinish={onFinish}
+        onFinish={onFinishMain}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
@@ -94,7 +122,7 @@ const AddProduct = () => {
           span: 16,
         }}
         style={{
-          maxWidth: 600,
+          maxWidth: 1000,
         }}
         initialValues={{
           remember: true,
@@ -126,31 +154,46 @@ const AddProduct = () => {
             Add Variant
           </Button>
         </Form.Item>
-        {varinatvalue.length > 0 &&
-          varinatvalue.map((item, index) => (
-            <Card style={{ width: 300 }}>
-              <>
-                <p>
-                  <b>{item.name}</b>
-                </p>
-                <input
-                  placeholder="value name"
-                  onChange={(e) => setValue(e.target.value)}
-                />
-                <input
-                  placeholder="Sotck"
-                  onChange={(e) => setValueStock(e.target.value)}
-                />
-                <Button onClick={() => handleVariantValue(index)}>Add</Button>
-                {item.value.map((i) => (
+        <Row>
+          {varinatvalue.length > 0 &&
+            varinatvalue.map((item, index) => (
+              <Col span={8}>
+                <Card style={{ width: 300 }}>
                   <>
-                    <p>{i.name}</p>
-                    <p>{i.stock}</p>
+                    <Button onClick={() => handleDelete(index)}>Delete</Button>
+                    <p>
+                      <b>
+                        {item.name} {JSON.stringify(varinatvalue)}
+                      </b>
+                    </p>
+                    <input
+                      placeholder="value name"
+                      onChange={(e) => setValue(e.target.value)}
+                    />
+                    <input
+                      placeholder="Sotck"
+                      onChange={(e) => setValueStock(e.target.value)}
+                    />
+                    <Button onClick={() => handleVariantValue(index)}>
+                      Add
+                    </Button>
+                    {item.value.map((i, id) => (
+                      <>
+                        <p>{i.name}</p>
+                        <p>{i.stock}</p>
+                        <Button
+                          danger
+                          onClick={() => handleValueDelete(index, id)}
+                        >
+                          delete
+                        </Button>
+                      </>
+                    ))}
                   </>
-                ))}
-              </>
-            </Card>
-          ))}
+                </Card>
+              </Col>
+            ))}
+        </Row>
       </Form>
     </>
   );

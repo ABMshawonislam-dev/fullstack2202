@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Card, Col, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Form, Input, Card, Col, Row, Select } from "antd";
 import axios from "axios";
 
 const AddProduct = () => {
   let [varinatvalue, setVarinatvalue] = useState([]);
   let [value, setValue] = useState("");
   let [valuestock, setValueStock] = useState("");
+  let [storelist, setStorelist] = useState([]);
   const onFinishMain = async (values) => {
+    console.log(values);
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
       {
@@ -55,6 +57,18 @@ const AddProduct = () => {
     arr[mainid].value.splice(id, 1);
     setValue(arr);
   };
+
+  useEffect(() => {
+    console.log("running");
+    async function getData() {
+      let data = await axios.get(
+        "http://localhost:8000/api/v1/product/allstore/65bce46b16336ca9c7029df6"
+      );
+      console.log(data.data);
+      setStorelist(data.data);
+    }
+    getData();
+  }, []);
 
   return (
     <>
@@ -111,6 +125,23 @@ const AddProduct = () => {
         >
           <Input />
         </Form.Item>
+
+        <Form.Item
+          label="Brand Name"
+          name="brandname"
+          rules={[
+            {
+              required: true,
+              message: "Please input your brand name!",
+            },
+          ]}
+        >
+          <Select>
+            {storelist.map((item) => (
+              <Select.Option value={item._id}>{item.storename}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
       </Form>
 
       <Form
@@ -162,9 +193,7 @@ const AddProduct = () => {
                   <>
                     <Button onClick={() => handleDelete(index)}>Delete</Button>
                     <p>
-                      <b>
-                        {item.name} {JSON.stringify(varinatvalue)}
-                      </b>
+                      <b>{item.name}</b>
                     </p>
                     <input
                       placeholder="value name"

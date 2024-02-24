@@ -16,6 +16,7 @@ import AddCategory from "./components/AddCategory";
 import AddSubCategory from "./components/AddSubCategory";
 import ViewSubCategory from "./components/ViewSubCategory";
 import AddProduct from "./components/AddProduct";
+import AddStore from "./components/AddStore";
 
 function App() {
   const router = createBrowserRouter(
@@ -37,6 +38,7 @@ function App() {
           <Route path="addsubcategory" element={<AddSubCategory />}></Route>
           <Route path="viewsubcategory" element={<ViewSubCategory />}></Route>
           <Route path="addproduct" element={<AddProduct />}></Route>
+          <Route path="addstore" element={<AddStore />}></Route>
         </Route>
       </Route>
     )

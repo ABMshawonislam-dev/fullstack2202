@@ -1,9 +1,24 @@
 import React from "react";
 import { Button, Checkbox, Form, Input } from "antd";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const AddStore = () => {
-  const onFinish = (values) => {
+  let userInfo = useSelector((state) => state.activeUser.value);
+
+  const onFinish = async (values) => {
     console.log("Success:", values);
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/product/createstore",
+      {
+        storename: values.storename,
+        tradenumber: values.tradenumber,
+        voterid: values.voterid,
+        ownerId: userInfo.id,
+      }
+    );
+
+    console.log(data.data.success);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

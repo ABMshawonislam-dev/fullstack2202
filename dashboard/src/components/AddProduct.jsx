@@ -4,6 +4,7 @@ import axios from "axios";
 
 const AddProduct = () => {
   let [varinatvalue, setVarinatvalue] = useState([]);
+  let [checkSize, setCheckSize] = useState("");
   let [value, setValue] = useState("");
   let [valuestock, setValueStock] = useState("");
   let [storelist, setStorelist] = useState([]);
@@ -23,11 +24,18 @@ const AddProduct = () => {
   const onFinish = (values) => {
     let arr = [...varinatvalue];
 
+    if (values.variantname.toLowerCase() == "size") {
+      setCheckSize("size");
+    }
     arr.push({
       name: values.variantname,
       value: [],
     });
-    setVarinatvalue(arr);
+    if (arr.length <= 2) {
+      setVarinatvalue(arr);
+    } else {
+      console.log("Bas r na");
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -199,10 +207,20 @@ const AddProduct = () => {
                       placeholder="value name"
                       onChange={(e) => setValue(e.target.value)}
                     />
-                    <input
-                      placeholder="Sotck"
-                      onChange={(e) => setValueStock(e.target.value)}
-                    />
+                    {item.name == "size" && varinatvalue.length == 1 ? (
+                      <input
+                        placeholder="Sotck"
+                        onChange={(e) => setValueStock(e.target.value)}
+                      />
+                    ) : (
+                      item.name == "color" &&
+                      varinatvalue.length != 1 && (
+                        <input
+                          placeholder="Sotck"
+                          onChange={(e) => setValueStock(e.target.value)}
+                        />
+                      )
+                    )}
                     <Button onClick={() => handleVariantValue(index)}>
                       Add
                     </Button>

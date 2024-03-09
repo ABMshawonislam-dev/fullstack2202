@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Card, Col, Row, Select } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Card,
+  Col,
+  Row,
+  Select,
+  Upload,
+} from "antd";
 import axios from "axios";
 
 const AddProduct = () => {
@@ -8,14 +18,24 @@ const AddProduct = () => {
   let [value, setValue] = useState("");
   let [valuestock, setValueStock] = useState("");
   let [storelist, setStorelist] = useState([]);
+  let [image, setImage] = useState({});
+  let [imagePrev, setImagePrev] = useState("");
   const onFinishMain = async (values) => {
-    console.log(values);
+    // console.log(values);
+    //formdata object
+    console.log(image);
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
       {
         name: values.name,
         description: values.description,
         variant: varinatvalue,
+        avatar: image,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     console.log(data);
@@ -78,6 +98,11 @@ const AddProduct = () => {
     getData();
   }, []);
 
+  let handleChange = (e) => {
+    setImage(e.target.files[0]);
+    setImagePrev(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <>
       <Form
@@ -97,6 +122,7 @@ const AddProduct = () => {
         onFinish={onFinishMain}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        enctype="multipart/form-data"
       >
         <Form.Item
           wrapperCol={{
@@ -120,6 +146,9 @@ const AddProduct = () => {
         >
           <Input />
         </Form.Item>
+
+        <Input onChange={handleChange} type="file" />
+        <img src={imagePrev} />
 
         <Form.Item
           label="Description"

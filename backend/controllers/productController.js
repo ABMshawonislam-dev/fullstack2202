@@ -7,9 +7,10 @@ let productController = (req, res) => {
     name: name,
     description: description,
     variant: variant,
+    image: `/uploads/${req.file.filename}`,
   });
   product.save();
-  console.log(product);
+  res.send({ success: "Product Created" });
 };
 
 module.exports = productController;

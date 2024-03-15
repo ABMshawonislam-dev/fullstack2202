@@ -11,6 +11,9 @@ import {
   Upload,
 } from "antd";
 import axios from "axios";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 const AddProduct = () => {
   let [varinatvalue, setVarinatvalue] = useState([]);
@@ -20,6 +23,7 @@ const AddProduct = () => {
   let [storelist, setStorelist] = useState([]);
   let [image, setImage] = useState({});
   let [imagePrev, setImagePrev] = useState("");
+  let [productType, setProductType] = useState("");
   const onFinishMain = async (values) => {
     // console.log(values);
     //formdata object
@@ -102,7 +106,9 @@ const AddProduct = () => {
     setImage(e.target.files[0]);
     setImagePrev(URL.createObjectURL(e.target.files[0]));
   };
-
+  let handleChange2 = (e)=>{
+    setProductType(e)
+  }
   return (
     <>
       <Form
@@ -124,6 +130,23 @@ const AddProduct = () => {
         autoComplete="off"
         enctype="multipart/form-data"
       >
+          <Select
+      defaultValue="Variant"
+      style={{
+        width: 120,
+      }}
+      options={[
+        {
+          value: 'variant',
+          label: 'Variant',
+        },
+        {
+          value: 'nonvariant',
+          label: 'Non Variant',
+        },
+      ]}
+      onChange={handleChange2}
+    />
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -150,6 +173,26 @@ const AddProduct = () => {
         <Input onChange={handleChange} type="file" />
         <img src={imagePrev} />
 
+      {productType == "variant" &&
+        <CKEditor
+                    editor={ ClassicEditor }
+                    data=""
+                    onReady={ editor => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event, editor ) => {
+                      const data = editor.getData();
+                      console.log( data );
+                  } } 
+                    onBlur={ ( event, editor ) => {
+                        console.log( 'Blur.', editor );
+                    } }
+                    onFocus={ ( event, editor ) => {
+                        console.log( 'Focus.', editor );
+                    } }
+                />
+              }
         <Form.Item
           label="Description"
           name="description"
@@ -180,7 +223,7 @@ const AddProduct = () => {
           </Select>
         </Form.Item>
       </Form>
-
+      {productType == "variant" &&
       <Form
         name="basic"
         labelCol={{
@@ -222,6 +265,7 @@ const AddProduct = () => {
             Add Variant
           </Button>
         </Form.Item>
+      
         <Row>
           {varinatvalue.length > 0 &&
             varinatvalue.map((item, index) => (
@@ -271,6 +315,7 @@ const AddProduct = () => {
             ))}
         </Row>
       </Form>
+        }
     </>
   );
 };

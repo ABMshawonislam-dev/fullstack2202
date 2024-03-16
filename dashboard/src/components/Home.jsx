@@ -39,6 +39,7 @@ const Home = () => {
       getItem("Product", "sub5", null, [
         getItem("Add Product", "/home/addproduct"),
         getItem("View Product", "8"),
+        getItem("Add Variant", "/home/addvariant"),
       ]),
     ]),
     getItem("Store", "sub6", <SettingOutlined />, [

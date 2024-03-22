@@ -10,12 +10,18 @@ const AddVariant = () => {
 
   const onFinish = async (values) => {
     console.log("Success:", values);
+    console.log(image);
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/variant",
       {
         name: values.name,
         vavatar: image,
         productId: productId,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     console.log(data);

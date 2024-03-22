@@ -130,23 +130,6 @@ const AddProduct = () => {
         autoComplete="off"
         enctype="multipart/form-data"
       >
-        <Select
-          defaultValue="Non Variant"
-          style={{
-            width: 120,
-          }}
-          options={[
-            {
-              value: "variant",
-              label: "Variant",
-            },
-            {
-              value: "nonvariant",
-              label: "Non Variant",
-            },
-          ]}
-          onChange={handleChange2}
-        />
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -173,31 +156,26 @@ const AddProduct = () => {
         <Input onChange={handleChange} type="file" />
         <img src={imagePrev} />
 
-        {productType == "variant" ? (
-          <CKEditor
-            editor={ClassicEditor}
-            data=""
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor is ready to use!", editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log(data);
-              setDescription(data);
-            }}
-            onBlur={(event, editor) => {
-              console.log("Blur.", editor);
-            }}
-            onFocus={(event, editor) => {
-              console.log("Focus.", editor);
-            }}
-          />
-        ) : (
-          <Form.Item label="TextArea">
-            <Input.TextArea rows={4} />
-          </Form.Item>
-        )}
+        <CKEditor
+          editor={ClassicEditor}
+          data=""
+          onReady={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log("Editor is ready to use!", editor);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            console.log(data);
+            setDescription(data);
+          }}
+          onBlur={(event, editor) => {
+            console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            console.log("Focus.", editor);
+          }}
+        />
+
         {/* <Form.Item
           label="Description"
           name="description"

@@ -12,6 +12,11 @@ const AddCategory = () => {
       {
         name: values.categoryname,
         ownerId: data.id,
+      },
+      {
+        headers: {
+          Authorization: "samindonisia",
+        },
       }
     );
 

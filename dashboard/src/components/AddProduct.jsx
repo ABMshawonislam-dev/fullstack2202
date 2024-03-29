@@ -32,8 +32,10 @@ const AddProduct = () => {
       {
         name: values.name,
         description: description,
-        // variant: varinatvalue,
         avatar: image,
+        regularprice: values.regularprice,
+        salesprice: values.salesprice,
+        quantity: values.quantity,
       },
       {
         headers: {
@@ -147,6 +149,45 @@ const AddProduct = () => {
             {
               required: true,
               message: "Please input your product name!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Regular Price"
+          name="regularprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input your regular price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Sales Price"
+          name="salesprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input your sales price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Quantity!",
             },
           ]}
         >

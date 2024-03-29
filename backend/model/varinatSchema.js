@@ -13,6 +13,15 @@ const variantSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
   },
+  regularprice: {
+    type: Number,
+  },
+  salesprice: {
+    type: Number,
+  },
+  quantity: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Variant", variantSchema);

@@ -37,7 +37,7 @@ _.get("/allstore/:id", allStoreController);
 
 _.post("/createcategory", secureApi, categoryController);
 _.post("/subcategory", subCategoryController);
-// _.post("/products", upload.single("avatar"), productController);
+_.post("/products", upload.single("avatar"), productController);
 _.post("/variant", upload.single("vavatar"), variantController);
 _.post("/deletecategory", deleteCategory);
 _.post("/deletesubcategory", deleteSubCategory);

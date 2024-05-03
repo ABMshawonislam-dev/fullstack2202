@@ -21,6 +21,7 @@ const productSchema = new Schema({
   quantity: {
     type: Number,
   },
+  variantsId: [Schema.Types.ObjectId]
 });
 
 module.exports = mongoose.model("Product", productSchema);

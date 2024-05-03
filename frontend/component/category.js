@@ -1,4 +1,4 @@
-import React from 'react'
+import Link from 'next/link'
 
 async function getData() {
     const res = await fetch('http://localhost:8000/api/v1/product/allcategory')
@@ -22,14 +22,17 @@ const Category = async () => {
 
   return (
     <>
-    <ul>
-      {data.map(item=>(
-
-       <li>{item.name}---{item?.ownerId?.name}</li>
-      ))}
-    </ul>
+      <ul>
+        {data.map((item) => (
+          <Link href={`/category/${item._id}`}>
+            <li>
+              {item.name}---{item?.ownerId?.name}
+            </li>
+          </Link>
+        ))}
+      </ul>
     </>
-  )
+  );
 }
 
 export default Category

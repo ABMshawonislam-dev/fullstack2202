@@ -16,6 +16,7 @@ const multer = require("multer");
 const allProductController = require("../../controllers/allProducts");
 const variantController = require("../../controllers/variantController");
 const secureApi = require("../../middleware/secureApi");
+const singleCategoryController = require("../../controllers/singleCategoryController");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -32,6 +33,7 @@ const upload = multer({ storage: storage });
 
 _.get("/allproducts", allProductController);
 _.get("/allcategory", allCategoryController);
+_.get("/singelcategory", singleCategoryController);
 _.get("/allsubcategory", allsubCategoryController);
 _.get("/allstore/:id", allStoreController);
 

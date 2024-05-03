@@ -1,6 +1,7 @@
 const Variant = require("../model/varinatSchema");
+const Product = require("../model/productSchema");
 
-let variantController = (req, res) => {
+let variantController =async (req, res) => {
   let { name, productId, regularprice, salesprice, quantity } = req.body;
   console.log(req.file);
 
@@ -13,6 +14,13 @@ let variantController = (req, res) => {
     quantity: quantity,
   });
   variant.save();
+
+    await Product.findOneAndUpdate(
+      { _id: productId },
+      { $push: { variantsId: variant._id } },
+      { new: true }
+    );
+
 
   res.send({ success: "Variant Created" });
 };

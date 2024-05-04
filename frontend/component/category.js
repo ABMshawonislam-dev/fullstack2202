@@ -25,8 +25,18 @@ const Category = async () => {
       <ul>
         {data.map((item) => (
           <Link href={`/category/${item._id}`}>
-            <li>
+            <li className='dropdown'>
               {item.name}---{item?.ownerId?.name}
+              {item.subCategoryId.length > 0 &&
+                <div>
+              {
+                item.subCategoryId.map(citem=>(
+
+                  <p>{citem.name}</p>
+                ))
+              }
+              </div>
+              }
             </li>
           </Link>
         ))}

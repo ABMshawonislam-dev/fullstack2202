@@ -1,8 +1,11 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Image from 'next/image'
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+
 
 async function getData() {
     const res = await fetch('http://localhost:8000/api/v1/product/allcart')
@@ -21,8 +24,19 @@ async function getData() {
 
 
 
+
 const Cart = async () => {
     const data = await getData()
+ 
+
+   
+        let price=0
+        data.map(item=>{
+
+            price += item.productId.salesprice ? (item.productId.salesprice*item.quantity) :(item.productId.regularprice*item.regularprice)
+        })
+        console.log(price)
+  
 
 
     let increment = async (id,type)=>{
@@ -45,6 +59,32 @@ const Cart = async () => {
 
         console.log(res)
     }
+
+    function createOrder() {
+         fetch("http://localhost:8000/api/v1/product/createpayment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // use the "body" param to optionally pass additional order information
+            // like product ids and quantities
+            body: JSON.stringify({
+                cart: [
+                    {
+                        id: "YOUR_PRODUCT_ID",
+                        quantity: "YOUR_PRODUCT_QUANTITY",
+                    },
+                ],
+            }),
+        })
+            .then(async (response) =>{
+                let a = await response.json()
+                console.log(a)
+            })
+            
+    }
+
+    
 
   return (
     <Container>
@@ -88,20 +128,27 @@ const Cart = async () => {
         <tr>
 
           <th>Product Total</th>
-          <th>Tax</th>
+          <th>Tax (15%)</th>
+          <th>Delivery Charge</th>
           <th>Total</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>100</td>
-          <td>15</td>
-          <td>2415</td>
+          <td>{price}</td>
+          <td>{(price*15)/100}</td>
+          <td>50</td>
+          <td>{price+((price*15)/100)+50}</td>
         </tr>
        
        
       </tbody>
-    </Table>      
+    </Table>     
+    <PayPalScriptProvider options={{ clientId:"ARc98bduEajyhDsaL9k7L07uK9lhpykQ1OKt1itQFIRmNqB751d4AN9S7FiJ8RTJzqHPS_6fcwcpWJ_6" }}>
+            <PayPalButtons
+                createOrder={createOrder}
+            />
+    </PayPalScriptProvider>
 
     </Container>
     

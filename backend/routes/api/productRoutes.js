@@ -20,6 +20,8 @@ const singleCategoryController = require("../../controllers/singleCategoryContro
 const cartController = require("../../controllers/cartController");
 const allCartController = require("../../controllers/allCart");
 const createPaymentController = require("../../controllers/createPayment");
+const createDiscount = require("../../controllers/discount");
+const singleproductController = require("../../controllers/signlePro");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -40,6 +42,7 @@ _.get("/singelcategory", singleCategoryController);
 _.get("/allsubcategory", allsubCategoryController);
 _.get("/allstore/:id", allStoreController);
 _.get("/allcart", allCartController);
+_.get("/singlepro/:slug",singleproductController);
 
 _.post("/createcategory", secureApi, categoryController);
 _.post("/subcategory", subCategoryController);
@@ -53,5 +56,6 @@ _.post("/approvecategory", approveCategoryController);
 _.post("/createstore", createStoreController);
 _.post("/createcart", cartController);
 _.post("/createpayment", createPaymentController);
+_.post("/creatediscount", createDiscount);
 
 module.exports = _;

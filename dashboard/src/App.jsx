@@ -18,6 +18,8 @@ import ViewSubCategory from "./components/ViewSubCategory";
 import AddProduct from "./components/AddProduct";
 import AddStore from "./components/AddStore";
 import AddVariant from "./components/AddVariant";
+import AddDiscount from "./components/AddDiscount";
+import Affiliate from "./components/Affiliate";
 
 function App() {
   const router = createBrowserRouter(
@@ -41,6 +43,8 @@ function App() {
           <Route path="addproduct" element={<AddProduct />}></Route>
           <Route path="addstore" element={<AddStore />}></Route>
           <Route path="addvariant" element={<AddVariant />}></Route>
+          <Route path="adddiscount" element={<AddDiscount />}></Route>
+          <Route path="affiliate" element={<Affiliate />}></Route>
         </Route>
       </Route>
     )

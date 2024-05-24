@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Image from 'next/image'
 import Button from 'react-bootstrap/Button';
 import { Metrophobic } from 'next/font/google';
+import Link from 'next/link';
 
 
 
@@ -49,7 +50,7 @@ const Product = ({item}) => {
       alt="Picture of the author"
     />
                 <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
+                <Card.Title><Link href={`/product/${item.name}`}>{item.name}</Link></Card.Title>
                 <Card.Text dangerouslySetInnerHTML={{ __html: item.description }}>
   
                 

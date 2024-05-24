@@ -46,9 +46,12 @@ const Home = () => {
       getItem("Add Store", "/home/addstore"),
       getItem("View Store", "10"),
     ]),
-    getItem("Flat Discount", "sub7", <SettingOutlined />, [
-      getItem("Add Discount", "11"),
+    getItem("Discount", "sub7", <SettingOutlined />, [
+      getItem("Add Discount", "/home/adddiscount"),
       getItem("View Discount", "12"),
+    ]),
+    getItem("Affiliat", "sub8", <SettingOutlined />, [
+      getItem("Get Link", "/home/affiliate"),
     ]),
   ];
 
